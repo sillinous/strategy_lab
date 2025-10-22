@@ -11,7 +11,7 @@ from contextlib import asynccontextmanager
 from app.core.config import get_settings
 from app.core.logging import setup_logging
 from app.core.database import init_db
-from app.api import strategies, backtests
+from app.api import strategies, backtests, prebuilt, optimization
 from app.utils.exceptions import StrategyLabException
 
 # Setup logging
@@ -83,6 +83,8 @@ async def general_exception_handler(request: Request, exc: Exception):
 # Include routers
 app.include_router(strategies.router, prefix="/api/v1")
 app.include_router(backtests.router, prefix="/api/v1")
+app.include_router(prebuilt.router, prefix="/api/v1")
+app.include_router(optimization.router, prefix="/api/v1")
 
 
 # Root endpoint
