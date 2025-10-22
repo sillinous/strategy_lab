@@ -29,3 +29,14 @@ backend/*.sqlite3
 # OS
 .DS_Store
 Thumbs.db
+
+# Frontend specific
+frontend/.git_backup/
+frontend/.gitignore_backup
+frontend/.logs/
+frontend/.deploy/
+frontend/nextjs_space/.build/
+frontend/nextjs_space/.next/
+frontend/nextjs_space/node_modules/
+frontend/nextjs_space/tsconfig.tsbuildinfo
+frontend_backup/
