@@ -18,7 +18,7 @@ yfinance==0.2.36
 
 # HTTP client
 httpx==0.26.0
-requests==2.31.0
+requests==2.32.4
 
 # Testing
 pytest==8.0.0
@@ -26,7 +26,7 @@ pytest-asyncio==0.23.3
 pytest-cov==4.1.0
 
 # Development tools
-python-multipart==0.0.6
+python-multipart==0.0.18
 python-dotenv==1.0.1
 
 # Logging and monitoring
