@@ -37,6 +37,8 @@ class Strategy(Base):
     
     # Risk parameters
     risk_level = Column(String(50), nullable=True)  # LOW, MEDIUM, HIGH
+    timeframe = Column(String(20), nullable=True)  # e.g., 1m,5m,15m,1h,4h,1d,1w,1mo
+    version = Column(String(20), nullable=True, default="1.0.0")
     
     # Relationship to backtests
     backtests = relationship("Backtest", back_populates="strategy", cascade="all, delete-orphan")

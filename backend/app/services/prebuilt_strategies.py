@@ -66,6 +66,8 @@ class PrebuiltStrategies:
                           'Buys when fast SMA crosses above slow SMA, sells when it crosses below.',
             'category': 'Trend Following',
             'risk_level': 'MEDIUM',
+            'timeframe': '1h',
+            'version': '1.0.0',
             'tags': ['trend', 'crossover', 'beginner-friendly'],
             'config': {
                 'indicators': [
@@ -106,6 +108,8 @@ class PrebuiltStrategies:
                           'and sells overbought conditions (RSI > 70).',
             'category': 'Mean Reversion',
             'risk_level': 'MEDIUM',
+            'timeframe': '1h',
+            'version': '1.0.0',
             'tags': ['rsi', 'mean-reversion', 'oscillator'],
             'config': {
                 'indicators': [
@@ -146,6 +150,8 @@ class PrebuiltStrategies:
                           'Enters when MACD crosses above signal, exits when it crosses below.',
             'category': 'Momentum',
             'risk_level': 'MEDIUM',
+            'timeframe': '4h',
+            'version': '1.0.0',
             'tags': ['macd', 'momentum', 'trending'],
             'config': {
                 'indicators': [
@@ -192,6 +198,8 @@ class PrebuiltStrategies:
                           'and sells at upper band, betting on price returning to mean.',
             'category': 'Mean Reversion',
             'risk_level': 'MEDIUM',
+            'timeframe': '1d',
+            'version': '1.0.0',
             'tags': ['bollinger', 'mean-reversion', 'volatility'],
             'config': {
                 'indicators': [
@@ -231,6 +239,8 @@ class PrebuiltStrategies:
                           'Enters when all EMAs align in trend direction.',
             'category': 'Trend Following',
             'risk_level': 'LOW',
+            'timeframe': '4h',
+            'version': '1.0.0',
             'tags': ['ema', 'trend', 'multi-timeframe'],
             'config': {
                 'indicators': [
@@ -273,6 +283,8 @@ class PrebuiltStrategies:
                           'Buys only when both indicators show oversold conditions.',
             'category': 'Mean Reversion',
             'risk_level': 'LOW',
+            'timeframe': '1h',
+            'version': '1.0.0',
             'tags': ['rsi', 'bollinger', 'combo', 'mean-reversion'],
             'config': {
                 'indicators': [
@@ -328,6 +340,8 @@ def initialize_prebuilt_strategies(db_session) -> List:
                 config=json.dumps(strategy_data['config']),
                 tags=','.join(strategy_data['tags']),
                 risk_level=strategy_data['risk_level'],
+                timeframe=strategy_data.get('timeframe'),
+                version=strategy_data.get('version', '1.0.0'),
                 is_active=True
             )
             db_session.add(strategy)

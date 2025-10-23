@@ -352,7 +352,18 @@ class PerformanceMetrics:
             metrics['num_winning_trades'] = 0
             metrics['num_losing_trades'] = 0
         
-        logger.info(f"Calculated metrics - Total Return: {metrics['total_return']:.2%}, "
-                   f"Sharpe: {metrics['sharpe_ratio']:.2f}, Max DD: {metrics['maximum_drawdown']:.2%}")
-        
+        # Rolling Sharpe (30 periods) if enough data
+        try:
+            if len(returns) >= 30:
+                roll = returns.rolling(30)
+                roll_sharpe = (roll.mean() / (roll.std() + 1e-12)) * np.sqrt(self.periods_per_year)
+                metrics['rolling_sharpe_30'] = float(roll_sharpe.iloc[-1]) if not np.isnan(roll_sharpe.iloc[-1]) else 0.0
+        except Exception:
+            metrics['rolling_sharpe_30'] = 0.0
+
+        logger.info(
+            f"Calculated metrics - Total Return: {metrics['total_return']:.2%}, "
+            f"Sharpe: {metrics['sharpe_ratio']:.2f}, Max DD: {metrics['maximum_drawdown']:.2%}"
+        )
+
         return metrics

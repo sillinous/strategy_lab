@@ -118,6 +118,8 @@ def list_strategies(
                     config=json.loads(strategy.config),
                     tags=strategy.tags_list,
                     risk_level=strategy.risk_level,
+                    timeframe=strategy.timeframe,
+                    version=strategy.version,
                     is_active=strategy.is_active,
                     created_at=strategy.created_at,
                     updated_at=strategy.updated_at
@@ -164,6 +166,8 @@ def get_strategy(
         config=json.loads(strategy.config),
         tags=strategy.tags_list,
         risk_level=strategy.risk_level,
+        timeframe=strategy.timeframe,
+        version=strategy.version,
         is_active=strategy.is_active,
         created_at=strategy.created_at,
         updated_at=strategy.updated_at
@@ -207,6 +211,10 @@ def update_strategy(
             strategy.tags = ','.join(strategy_data.tags)
         if strategy_data.risk_level is not None:
             strategy.risk_level = strategy_data.risk_level
+        if strategy_data.timeframe is not None:
+            strategy.timeframe = strategy_data.timeframe
+        if strategy_data.version is not None:
+            strategy.version = strategy_data.version
         if strategy_data.is_active is not None:
             strategy.is_active = strategy_data.is_active
         
@@ -222,6 +230,8 @@ def update_strategy(
             config=json.loads(strategy.config),
             tags=strategy.tags_list,
             risk_level=strategy.risk_level,
+            timeframe=strategy.timeframe,
+            version=strategy.version,
             is_active=strategy.is_active,
             created_at=strategy.created_at,
             updated_at=strategy.updated_at

@@ -125,6 +125,8 @@ def import_prebuilt_strategy(name: str, db: Session = Depends(get_db)):
             config=json.dumps(prebuilt['config']),
             tags=','.join(prebuilt['tags']),
             risk_level=prebuilt['risk_level'],
+            timeframe=prebuilt.get('timeframe'),
+            version=prebuilt.get('version', '1.0.0'),
             is_active=True
         )
         
@@ -142,6 +144,8 @@ def import_prebuilt_strategy(name: str, db: Session = Depends(get_db)):
             config=strategy.config_dict,
             tags=strategy.tags_list,
             risk_level=strategy.risk_level,
+            timeframe=strategy.timeframe,
+            version=strategy.version,
             is_active=strategy.is_active,
             created_at=strategy.created_at,
             updated_at=strategy.updated_at

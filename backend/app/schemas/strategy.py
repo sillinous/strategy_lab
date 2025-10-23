@@ -56,6 +56,11 @@ class StrategyBase(BaseModel):
     config: StrategyConfig = Field(..., description="Strategy configuration")
     tags: Optional[List[str]] = Field(None, description="Tags for categorization")
     risk_level: Optional[str] = Field(None, description="Risk level (LOW, MEDIUM, HIGH)")
+    timeframe: Optional[str] = Field(
+        None,
+        description="Timeframe hint (1m,3m,5m,15m,30m,45m,1h,2h,4h,6h,8h,12h,1d,3d,1w,2w,1mo)"
+    )
+    version: Optional[str] = Field(None, description="Strategy version semantic")
     is_active: Optional[bool] = Field(True, description="Whether strategy is active")
     
     @validator('risk_level')
@@ -65,6 +70,14 @@ class StrategyBase(BaseModel):
             if v.upper() not in valid_levels:
                 raise ValueError(f"Risk level must be one of: {valid_levels}")
             return v.upper()
+        return v
+
+    @validator('timeframe')
+    def validate_timeframe(cls, v):
+        if v is not None:
+            valid = {'1m','3m','5m','15m','30m','45m','1h','2h','4h','6h','8h','12h','1d','3d','1w','2w','1mo'}
+            if v not in valid:
+                raise ValueError(f"Timeframe must be one of: {sorted(valid)}")
         return v
 
 
@@ -80,6 +93,8 @@ class StrategyUpdate(BaseModel):
     config: Optional[StrategyConfig] = None
     tags: Optional[List[str]] = None
     risk_level: Optional[str] = None
+    timeframe: Optional[str] = None
+    version: Optional[str] = None
     is_active: Optional[bool] = None
 
 

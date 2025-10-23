@@ -54,6 +54,8 @@ class VectorizedBacktester:
         self.results = None
         self.trades = []
         self.equity_curve = None
+        self.turnover = 0.0
+        self.avg_trade_duration_seconds = 0.0
         
         logger.info(f"Initialized VectorizedBacktester with {len(data)} data points")
     
@@ -268,6 +270,27 @@ class VectorizedBacktester:
             
             # Extract trades
             self.trades = self._extract_trades(df)
+            # Compute turnover and avg trade duration
+            try:
+                gross_turnover = 0.0
+                durations = []
+                for t in self.trades:
+                    qty = float(t.get('quantity', 0) or 0)
+                    ep = float(t.get('entry_price', 0) or 0)
+                    xp = float(t.get('exit_price', 0) or 0)
+                    if qty and ep:
+                        gross_turnover += abs(ep * qty)
+                    if qty and xp:
+                        gross_turnover += abs(xp * qty)
+                    et = t.get('entry_time')
+                    xt = t.get('exit_time')
+                    if et and xt:
+                        durations.append((pd.to_datetime(xt) - pd.to_datetime(et)).total_seconds())
+                self.turnover = float(gross_turnover)
+                if durations:
+                    self.avg_trade_duration_seconds = float(pd.Series(durations).mean())
+            except Exception:
+                pass
             
             # Calculate metrics
             metrics_calculator = PerformanceMetrics(
@@ -287,6 +310,9 @@ class VectorizedBacktester:
                 trade_returns=trade_returns,
                 initial_capital=self.initial_capital
             )
+            # Attach additional metrics
+            metrics['turnover'] = self.turnover
+            metrics['avg_trade_duration_seconds'] = self.avg_trade_duration_seconds
             
             # Store results
             self.results = df

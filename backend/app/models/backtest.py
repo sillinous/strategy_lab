@@ -45,6 +45,8 @@ class Backtest(Base):
     total_return = Column(Float, nullable=True)
     sharpe_ratio = Column(Float, nullable=True)
     max_drawdown = Column(Float, nullable=True)
+    turnover = Column(Float, nullable=True)
+    avg_trade_duration = Column(Float, nullable=True)
     win_rate = Column(Float, nullable=True)
     num_trades = Column(Integer, nullable=True)
     
