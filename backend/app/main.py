@@ -14,6 +14,7 @@ from app.core.database import init_db
 from app.api import strategies, backtests, prebuilt, optimization
 from app.api import comparison
 from app.api import agents
+from app.api import catalog as catalog_api
 from app.utils.exceptions import StrategyLabException
 
 # Setup logging
@@ -89,6 +90,7 @@ app.include_router(prebuilt.router, prefix="/api/v1")
 app.include_router(optimization.router, prefix="/api/v1")
 app.include_router(comparison.router, prefix="/api/v1")
 app.include_router(agents.router, prefix="/api/v1")
+app.include_router(catalog_api.router, prefix="/api/v1")
 
 
 # Root endpoint

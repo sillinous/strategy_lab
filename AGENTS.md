@@ -5,6 +5,7 @@ This guide helps contributors work effectively in this repo.
 ## Project Structure & Module Organization
 - Root layout: `backend/` (FastAPI service, primary code) and `frontend/` (Next.js scaffold in `frontend/nextjs_space/`).
 - Backend source: `backend/app/` with submodules `api/`, `core/`, `models/`, `schemas/`, `services/`, `utils/`.
+- 
 - Tests: `backend/tests/` and a quick check in `backend/test_quick.py`.
 - Runtime assets: `backend/data/` (cache) and `backend/logs/` (created at runtime).
 

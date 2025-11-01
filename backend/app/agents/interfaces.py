@@ -14,7 +14,8 @@ class AgentContext(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 
-class AgentConfig(BaseModel):n+    name: str
+class AgentConfig(BaseModel):
+    name: str
     version: str = "1.0.0"
     role: str
     params: Dict[str, Any] = Field(default_factory=dict)
@@ -22,10 +23,11 @@ class AgentConfig(BaseModel):n+    name: str
 
 class AgentReport(BaseModel):
     agent_id: str
-    status: str
+    status: str  # pending|running|completed|failed
     started_at: datetime
     finished_at: Optional[datetime] = None
     summary: Dict[str, Any] = Field(default_factory=dict)
+    error: Optional[Dict[str, Any]] = None
 
 
 class Agent(Protocol):
@@ -38,4 +40,3 @@ class Agent(Protocol):
     def run(self, task: Dict[str, Any]) -> AgentReport: ...
     def health(self) -> Dict[str, Any]: ...
     def shutdown(self) -> None: ...
-

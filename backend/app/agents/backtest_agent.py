@@ -3,6 +3,8 @@ from typing import Dict, Any
 from app.agents.base import BaseAgent
 from app.agents.interfaces import AgentReport
 from app.services.backtester import VectorizedBacktester
+from app.services.datastore import ds_get
+from app.services.io.partitions import read_ohlcv_range
 
 
 class BacktestAgent(BaseAgent):
@@ -10,7 +12,14 @@ class BacktestAgent(BaseAgent):
         super().__init__(role, version)
 
     def run(self, task: Dict[str, Any]) -> AgentReport:
-        df = task["data"]
+        df = task.get("data")
+        if df is None and self.context:
+            # Load from partitions if provided
+            parts = task.get("partitions")
+            if isinstance(parts, dict) and {"symbol", "start", "end"}.issubset(parts.keys()):
+                df = read_ohlcv_range(symbol=parts["symbol"], start=parts["start"], end=parts["end"])
+            if df is None:
+                df = ds_get(self.context.trace_id, "market_data")
         strategy_config = task["strategy_config"]
         bt = VectorizedBacktester(
             data=df,
@@ -29,4 +38,3 @@ class BacktestAgent(BaseAgent):
             finished_at=None,
             summary=result,
         )
-
